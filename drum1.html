@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gusta First กลองชุด</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        var product = [{
+    id: 1,
+    img: 'drum1.jpg',
+    name: 'Gusta First กลองชุด',
+    price: 7650,
+    description: '<a href="drum1.html" class="blg-btn">Learn More</a>',
+    type: 'g'
+ }];
+ $(document).ready(() => {
+    var html = '';
+    for (let i = 0; i < product.length; i++) {
+        html += `<div class="blg-item ${product[i].type}">
+        <img src="${product[i].img}" alt="">
+        <h4>${product[i].name}</h4>
+        <p>${numberWithCommas(product[i].price) }บาท</p>
+        ${product[i].description}
+    </div>`;
+    }
+    $("#gt").html(html);
+})
+
+function numberWithCommas(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+        x = x.replace(pattern, "$1,$2");
+    return x;
+}
+    var productindex = 0;
+    function openProductDetail(index) {
+        productindex = index;
+        console.log(productindex)
+        $("#modalDesc").css('display', 'flex')
+        $("#mdd-img").attr('src', product[index].img);
+        $("#mdd-name").text(product[index].name)
+        $("#mdd-price").text(numberWithCommas(product[index].price) + 'บาท')
+        $("#mdd-desc").text(product[index].description)
+    }
+    function closeMode() {
+        $(".modal").css('display','none')
+    }
+    function buymode(){
+        swal.fire({
+            icon: 'success',
+            title: 'ซื้อสินค้า' + product[productindex].name + 'สำเร็จ'
+        })
+    }
+    var cart = [];
+    function addtocart() {
+        var pass = true;
+
+        for (let i = 0; i < cart.length; i++ ) {
+            if(productindex == cart[i].index) {
+               console.log('เลือกสินค้านี้มาก่อนเเล้ว')
+               cart[i].count++;
+               pass = false;
+            }
+        }
+
+        if(pass) {
+            var obj = {
+                index: productindex,
+                id: product[productindex].id,
+                name: product[productindex].name,
+                price: product[productindex].price,
+                img: product[productindex].img,
+                count: 1
+            };
+            //console.log(obj)
+            cart.push(obj)
+        }
+        console.log(cart)
+
+        swal.fire({
+            icon: 'success',
+            title: 'Add' + product[productindex].name + ' to cart!'
+        })
+        $("#cartc").css('display','flex').text(cart.length)
+    }
+    function opcart(){
+        $('#modalCart').css('display','flex')
+        rendercart();
+    }
+    
+    function rendercart(){
+        if(cart.length > 0){
+            var html = '';
+            for (let i = 0; i < cart.length; i++) {
+                html += `<div class="cartlist-items">
+                    <div class="cartlist-left">
+                        <img src="${cart[i].img}" alt="">
+                        <div class="cartlist-detail">
+                            <p id="mdd-name" style="font-size: 1.5vw;">${cart[i].name}</p>
+                            <p id="mdd-price" style="font-size: 1.2vw;">${numberWithCommas(cart[i].price * cart[i].count) }</p>
+                        </div>
+                </div>
+                <div class="cartlist-right">
+                    <p onclick="deinits ('-', ${i})" class="btnc">-</p>
+                    <p id="countits${i}" style="margin: 0 20px;">${cart[i].count}</p>
+                    <p onclick="deinits ('+', ${i})" class="btnc">+</p>
+                </div>
+            </div>`;
+            }
+            $("#mycart").html(html)
+        }
+        else {
+            $("#mycart").html(`<p>ไม่พบรายการสินค้า</p>`)
+        }
+    }
+
+    function deinits(action,index){
+        if(action == '-') {
+            if(cart[index].count > 0) {
+                cart[index].count--;
+                $("#countits"+index).text(cart[index].count)
+
+                if(cart[index].count <= 0){
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'คุณเเน่ใจหรือไม่ว่าต้องการลบ?',
+                        showConfirmButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: 'ลบ',
+                        cancelButtonText: 'ยกเลิก'
+                    }).then((res) => {
+                        if(res.isConfirmed){
+                            cart.splice(index, 1)
+                            console.log(cart)
+                            rendercart();
+                            $("#cartc").css('display','flex').text(cart.length)
+
+                            if(cart.length <= 0) {
+                                $("#cartc").css('display','none')
+                            }
+                        }
+                        else{
+                            cart[index].count++;
+                            $("#countits"+index).text(cart[index].count)
+                        }
+                    })
+                }
+            }
+        }
+        else if(action == '+') {
+            cart[index].count++;
+            $("#countits"+index).text(cart[index].count)
+        }
+    }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .container1 {
+            max-width: 1140;
+            margin: 0 auto;
+        }
+
+        nav {
+            padding: 1rem;
+            background-color: wheat;
+        }
+
+        .nav-con {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo a {
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .manu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .manu li {
+            margin: 0 1rem;
+        }
+
+        .manu li a {
+            color: white;
+            text-decoration: none;
+        }
+        .nav-profile{
+            background: wheat;
+            display: flex;
+            align-items: center;
+        }
+        .nav-profile-name{
+            color: white;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .fa-cart-shopping{
+            font-size: 30px;
+            color: white;
+            margin-right: 15px;
+        }
+        .nav-profile-cart{
+            position: relative;
+        }
+        .cartc{
+            position: absolute;
+            top: -15px;
+            right: -1px;
+            width: 25px;
+            height: 25px;
+            background: brown;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .blg-con {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: 2rem;
+            text-align: center;
+        }
+        
+        .blg-item img {
+            width: 80%;
+            height: 50%;
+        }
+
+        .blg-title {
+            margin: 5%;
+        }
+
+        .blg-item h4 {
+            margin: 5%;
+        }
+
+        .blg-item p {
+            margin: 5%;
+        }
+
+        .blg-item a {
+            display: inline-block;
+            color: white;
+            background-color: wheat;
+            padding: 1rem 1rem;
+            border-radius: 5px;
+        }
+
+        .s1 {
+            text-align: center;
+        }
+
+        .hend2 {
+            padding: 2rem;
+            color: white;
+            background-color: wheat;
+            text-align: left;
+        }
+
+        .shop a {
+            display: inline-block;
+            color: white;
+            background-color: wheat;
+            padding: 1rem 1rem;
+            border-radius: 5px;
+        }
+        .modal,
+        .modal-bg  {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-page{
+            z-index: 99;
+            min-width: 30vw;
+            max-width: 60vw;
+            max-height: 30vw;
+            overflow: scroll;
+            background:white;
+            border:5px solid wheat;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .cartlist{
+
+        }
+        .cartlist-items{
+            display: flex;
+            justify-content: space-between;
+            width: 50vw;
+            margin-bottom: 20px;
+        }
+        .cartlist-left{
+            display: flex;
+        }
+        .cartlist-left img{
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 10px;
+            border: 5px solid wheat;
+        }
+        .cartlist-right{
+            display: flex;
+            align-items: center;
+        }
+        .btn-buy{
+            background: linear-gradient(125deg, wheat,wheat);
+            color: white;
+            margin-left: 10px;
+        }
+        .btn-control{
+            display: flex;
+            justify-content: flex-end;
+        }
+        .btn{
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.5vw;
+            transition: 0.3s;
+        }
+        .btnc{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="container1">
+            <div class="nav-con">
+                <div class="logo">
+                    <a href="#">DeeMusic</a>
+                </div>
+                <ul class="manu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="เเบบฟอร์ม.html">เเบบฟอร์มข้อมูล</a></li>
+                    <div class="nav-profile">
+                        <p class="nav-profile-name">ตะกร้าสินค้า</p>
+                        <div onclick="opcart()" style="cursor: pointer;" class="nav-profile-cart">
+                            <i class="fas fa-cart-shopping"></i>
+                            <div id="cartc" class="cartc" style="display: none;">
+                                0
+                            </div> 
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="s1">
+        <h1>Gusta First กลองชุด</h1>
+        <img src="drum1.jpg">
+        <h1>Gusta First กลองชุด</h1>
+        <h2>
+            <p>ยี่ห้อ : Gusta</p>
+            <p>รุ่น : Gusta First กลองชุด Acoustic Drums</p>
+            <p>สถานะสินค้า : มีสินค้าพร้อมส่ง</p>
+            <p>ของแถม : เก้าอี้, ไม้กลอง</p>
+            <p>การจัดส่ง : ซื้อครบ 500 บาท จัดส่งฟรีทั่วประเทศ / จัดส่งด่วนภายในวัน ทั่วกทม. และปริมณฑล</p>
+            <p>ราคา : 7,650 บาท</p>
+            <p>รายละเอียดสำคัญ :</p>
+            <p>จัดส่งด่วน</p>
+            <p>ส่งฟรีทั่วประเทศ</p>
+            <p>พร้อมบริการก่อนและหลังการขาย</p>
+
+            <p></p>การชำระเงิน : จ่ายหน้าร้าน 7สาขา / โอนเงิน / เก็บปลายทาง / บัตรเครดิต /ผ่อนชำระ 0% (บางรายการ) / Shopee /
+            Lazada</p>
+        </h2>
+        <div class="shop">
+            <a href="#" onclick="addtocart()" class="blg-btn">เพิ่มลงตะกร้า</a>
+        </div>
+    </div>
+    <div id="modalCart" class="modal" style="display: none;">
+        <div onclick="closeMode()" class="modal-bg"></div>
+        <div class="modal-page">
+            <h2>ตะกร้าสินค้า</h2>
+            <br>
+            <div id="mycart" class="cartlist">
+
+                <div class="cartlist-items">
+                    <div class="cartlist-left">
+                        <img src="guitar1.jpg" alt="">
+                        <div class="cartlist-detail">
+                            <p id="mdd-name" style="font-size: 1.5vw;">Product name</p>
+                            <p id="mdd-price" style="font-size: 1.2vw;">5500 บาท</p>
+                        </div>
+                </div>
+                <div class="cartlist-right">
+                    <p class="btnc">-</p>
+                    <p style="margin: 0 20px;">1</p>
+                    <p class="btnc">+</p>
+                </div>
+            </div>
+        </div>
+        <div class="btn-control">
+            <button onclick="closeMode()" class="btn">
+                Close
+            </button>
+            <button onclick="buymode()" class="btn btn-buy">
+                Buy
+            </button>
+        </div>
+    </div>
+    </div>
+    <br></br>
+    <div class="hend2">
+        <h2>เวลาทำการ</h2>
+        <h3>ทุกวัน 10.00-24.00น.</h3>
+        <h3>เบอร์โทรด่วน 0892598999</h3>
+        <h2>เวลาทำการสาขา</h2>
+        <h3>วันจันทร์-วันเสาร์</h3>
+        <h3>เวลา 10.00-20.00น.</h3>
+        <h3>วันอาทิตย์ วันหยุดนักขัตฤกษ์</h3>
+        <h3>เวลา 9.00-20.00น.</h3>
+    </div>
+</body>
+
+</html>

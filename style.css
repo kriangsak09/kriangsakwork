@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+
+* {
+    font-family: 'Prompt', sans-serif;
+}
+.head{
+    background-color: wheat;
+    text-align: center;
+    color: white;
+}
+.jp0{
+    width: 80%;
+    height: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    box-shadow: 0px 0px 20px 5px wheat;
+    overflow: hidden;
+    border: 10px solid white;
+    border-radius: 10px;
+}
+.jp0 figure img{
+    width: 20%;
+    height: 800px;
+    float: left;
+}
+.jp0 figure{
+    position: relative;
+    width: 500%;
+    margin: 0px;
+    left: 0px;
+    animation: dee 20s infinite linear;
+}
+@keyframes dee{
+    0%{left: 0%;}
+    15%{left: 0%;}
+    20%{left: -100%;}
+    35%{left: -100%;}
+    40%{left: -200%;}
+    60%{left: -200%;}
+    65%{left: -300%;}
+    80%{left: -300%;}
+    85%{left: -400%;}
+    100%{left: -400%;}
+}

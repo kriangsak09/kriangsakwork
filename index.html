@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เว็บขายเครื่องดนตรี</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+        .container1 {
+            max-width: 1140;
+            margin: 0 auto;
+        }
+        .search{
+            width: 20%;
+            padding: 10px;
+        }
+        .search-search2{
+            padding: 10px;
+            border: 2px solid transparent;
+            width: 150%;
+            outline: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .search-search2:focus{
+            border: 2px solid black;
+        }
+        nav {
+            padding: 1rem;
+            background-color: wheat;
+        }
+
+        .nav-con {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo a {
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .manu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .manu li {
+            margin: 0 1rem;
+        }
+
+        .manu li a {
+            color: white;
+            text-decoration: none;
+        }
+        .nav-profile{
+            background: wheat;
+            display: flex;
+            align-items: center;
+        }
+        .nav-profile-name{
+            color: white;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .fa-cart-shopping{
+            font-size: 30px;
+            color: white;
+            margin-right: 15px;
+        }
+        .nav-profile-cart{
+            position: relative;
+        }
+        .cartc{
+            position: absolute;
+            top: -15px;
+            right: -1px;
+            width: 25px;
+            height: 25px;
+            background: brown;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .jp1{
+            width: 80%;
+            height: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            box-shadow: 0px 0px 20px 5px wheat;
+            overflow: hidden;
+            border: 10px solid white;
+            border-radius: 10px;
+        }
+        .jp1 figure img{
+            width: 20%;
+            height: 800px;
+            float: left;
+        }
+        .jp1 figure{
+            position: relative;
+            width: 500%;
+            margin: 0px;
+            left: 0px;
+            animation: kriangsak 20s infinite linear;
+        }
+        @keyframes kriangsak{
+            0%{left: 0%;}
+            15%{left: 0%;}
+            20%{left: -100%;}
+            35%{left: -100%;}
+            40%{left: -200%;}
+            60%{left: -200%;}
+            65%{left: -300%;}
+            80%{left: -300%;}
+            85%{left: -400%;}
+            100%{left: -400%;}
+        }
+        .blg-con{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: 2rem;
+            text-align: center;
+        }
+        .blg-item img{
+            width: 80%;
+            height: 50%;
+        }
+        .blg-title{
+            margin: 5%;
+        }
+        .blg-item h4{
+            margin: 5%;
+        }
+        .blg-item p{
+            margin: 5%;
+        }
+        .blg-item a{
+            display: inline-block;
+            color: white;
+            background-color: wheat;
+            padding: 1rem 1rem;
+            border-radius: 5px;
+        }
+        .head1 {
+            text-align: center;
+        }
+       
+        .hend2{
+            padding: 2rem;
+            color: white;
+            background-color: wheat;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container1">
+            <div class="nav-con">
+                <div class="logo">
+                    <a href="#">DeeMusic</a>
+                </div>
+                <div class="search">
+                    <input onkeyup="searchsg(this)" id="text_search" type="text" class="search-search2" placeholder="Search something...">
+                </div>
+                <ul class="manu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="เเบบฟอร์ม.html">เเบบฟอร์มข้อมูล</a></li>
+                    <div class="nav-profile">
+                        <p class="nav-profile-name">ตะกร้าสินค้า</p>
+                        <div class="nav-profile-cart">
+                            <i class="fas fa-cart-shopping"></i>
+                            <div class="cartc" style="display: none;">
+                                5
+                            </div>
+                        </div>
+                    </div>
+                </ul>  
+            </div>
+        </div>
+    </nav>
+    <div class="jp1">
+        <figure>
+            <a href="eledrum1.html"><img src="km.png"></a>
+            <a href="guitar2.html"><img src="km0.png"></a>
+            <a href="pianos2.html"><img src="km1.png"></a>
+            <a href="eledrum1.html"><img src="km.png"></a>
+            <a href="guitar2.html"><img src="km0.png"></a>
+        </figure>
+    </div>
+    <div class="head1">
+        <h1>DeeMusic</h1>
+    </div>
+    <section class="blog">
+        <div class="container1">
+
+            <div class="blg-title">
+                <center><h3>หมวดหมู่</h3></center>
+            </div>
+
+            <div class="blg-con">
+
+                <div class="blg-item">
+                    <img src="k1.jpg" alt="">
+                    <h4>guitar</h4>
+                    <p>acoustic guitar</p>
+                    <a href="guitar.html" class="blg-btn">Learn More</a>
+                </div>
+
+                <div class="blg-item">
+                    <img src="กีต้าร์ไฟฟ้า1.jpg" alt="">
+                    <h4>guitar</h4>
+                    <p>electric guitar</p>
+                    <a href="eleguitar.html" class="blg-btn">Learn More</a>
+                </div>
+
+                <div class="blg-item">
+                    <img src="เปียโนไฟฟ้า.jpg" alt="">
+                    <h4>pianos</h4>
+                    <p>electric pianos</p>
+                    <a href="pianos.html" class="blg-btn">Learn More</a>
+                </div>
+
+                <div class="blg-item">
+                    <img src="กลอง.jpg" alt="">
+                    <h4>drum</h4>
+                    <p>drum set</p>
+                    <a href="drum.html" class="blg-btn">Learn More</a>
+                </div>
+
+                <div class="blg-item">
+                    <img src="เบส.jpg" alt="">
+                    <h4>bass</h4>
+                    <p>bass</p>
+                    <a href="bass.html" class="blg-btn">Learn More</a>
+                </div>
+                
+                <div class="blg-item">
+                    <img src="กลองฟ้า.jpg" alt="">
+                    <h4>drum</h4>
+                    <p>electric drum</p>
+                    <a href="eledrum.html" class="blg-btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="hend2">
+        <h2>เวลาทำการ</h2>
+        <h3>ทุกวัน 10.00-24.00น.</h3>
+        <h3>เบอร์โทรด่วน 0892598999</h3>
+        <h2>เวลาทำการสาขา</h2>
+        <h3>วันจันทร์-วันเสาร์</h3>
+        <h3>เวลา 10.00-20.00น.</h3>
+        <h3>วันอาทิตย์ วันหยุดนักขัตฤกษ์</h3>
+        <h3>เวลา 9.00-20.00น.</h3>
+    </div>
+</body>
+
+</html>
